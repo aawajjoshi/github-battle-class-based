@@ -1,0 +1,23 @@
+{
+  "name": "github-battle",
+  "version": "1.0.0",
+  "description": "A GitHub Battle web application built using React (class-based components)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aawajjoshi/github-battle-class-based.git"
+  },
+  "author": "Aawaj Joshi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aawajjoshi/github-battle-class-based/issues"
+  },
+  "homepage": "https://github.com/aawajjoshi/github-battle-class-based#readme",
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
+}
