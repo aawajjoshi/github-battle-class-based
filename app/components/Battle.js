@@ -22,7 +22,7 @@ function Instructions() {
           <FaFighterJet className="bg-light" color="#727272" size={140} />
         </li>
         <li>
-          <h3 className="header-sm">See the winners</h3>
+          <h3 className="header-sm">See the winner</h3>
           <FaTrophy className="bg-light" color="rgb(255, 215, 0)" size={140} />
         </li>
       </ol>
@@ -148,7 +148,17 @@ export default class Battle extends React.Component {
     const { playerOne, playerTwo, battle } = this.state;
 
     if (battle === true) {
-        return <Results playerOne={playerOne} playerTwo={playerTwo} />
+        return (
+            <Results 
+                playerOne={playerOne} 
+                playerTwo={playerTwo} 
+                onReset={() => this.setState({
+                    playerOne: null,
+                    playerTwo: null,
+                    battle: false
+                })}
+            />
+        )
     }
 
     return (

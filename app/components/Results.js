@@ -7,9 +7,10 @@ import {
   FaCode,
   FaUser,
 } from "react-icons/fa";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 import Card from "./Card";
+import Loading from './Loading';
 import { battle } from "../utils/api";
 
 function ProfileComponent({ profile }) {
@@ -44,8 +45,8 @@ function ProfileComponent({ profile }) {
 }
 
 ProfileComponent.propTypes = {
-    profile: PropTypes.object.isRequired
-}
+  profile: PropTypes.object.isRequired,
+};
 
 export default class Results extends React.Component {
   constructor(props) {
@@ -60,7 +61,7 @@ export default class Results extends React.Component {
   }
 
   componentDidMount() {
-    const { playerOne, playerTwo } = this.props;
+    const { playerOne, playerTwo, onReset } = this.props;
 
     battle([playerOne, playerTwo])
       .then((players) => {
@@ -79,38 +80,50 @@ export default class Results extends React.Component {
       });
   }
   render() {
+    const { onReset } = this.props;
     const { winner, loser, error, loading } = this.state;
 
     return (
       <>
-        {loading === true && <p>LOADING</p>}
+        {loading === true && <Loading text='Battling' />}
 
         {error && <p className="center-text error">{error}</p>}
 
         {loading === false && !error && (
-          <div className="grid space-around container-sm">
-            <Card
-              header={winner.score === loser.score ? "Tie" : "Winner"}
-              subHeader={`Score: ${winner.score.toLocaleString()}`}
-              avatar={winner.profile.avatar_url}
-              href={winner.profile.html_url}
-              name={winner.profile.login}
-            >
+          <>
+            <div className="grid space-around container-sm">
+              <Card
+                header={winner.score === loser.score ? "Tie" : "Winner"}
+                subHeader={`Score: ${winner.score.toLocaleString()}`}
+                avatar={winner.profile.avatar_url}
+                href={winner.profile.html_url}
+                name={winner.profile.login}
+              >
                 <ProfileComponent profile={winner.profile} />
-            </Card>
+              </Card>
 
-            <Card
-              header={winner.score === loser.score ? "Tie" : "Loser"}
-              subHeader={`Score: ${loser.score.toLocaleString()}`}
-              avatar={loser.profile.avatar_url}
-              href={loser.profile.html_url}
-              name={loser.profile.login}
-            >
-              <ProfileComponent profile={loser.profile} />
-            </Card>
-          </div>
+              <Card
+                header={winner.score === loser.score ? "Tie" : "Loser"}
+                subHeader={`Score: ${loser.score.toLocaleString()}`}
+                avatar={loser.profile.avatar_url}
+                href={loser.profile.html_url}
+                name={loser.profile.login}
+              >
+                <ProfileComponent profile={loser.profile} />
+              </Card>
+            </div>
+            <button className="btn dark-btn btn-space" onClick={onReset}>
+              Reset
+            </button>
+          </>
         )}
       </>
     );
   }
 }
+
+Results.propTypes = {
+  playerOne: PropTypes.string.isRequired,
+  playerTwo: PropTypes.string.isRequired,
+  onReset: PropTypes.func.isRequired,
+};
