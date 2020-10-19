@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import Hover from './Hover';
+
 const styles = {
   container: {
     position: "relative",
@@ -23,43 +25,18 @@ const styles = {
   },
 };
 
-export default class Tooltip extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      hovering: false,
-    };
-
-    this.mouseOver = this.mouseOver.bind(this);
-    this.mouseOut = this.mouseOut.bind(this);
-  }
-  mouseOver() {
-    this.setState({
-      hovering: true,
-    });
-  }
-
-  mouseOut() {
-    this.setState({
-      hovering: false,
-    });
-  }
-
-  render() {
-      const { text, children } = this.props
-      const { hovering } = this.state
+export default function Tooltip({ text, children }) {
     return (
-        <div
-            onMouseOver={this.mouseOver}
-            onMouseOut={this.mouseOut}
-            style={styles.container}
-        >
-          {hovering === true && <div style={styles.tooltip}>{text}</div>}
-          {children}  
-        </div>
+        //render prop - receives a prop (children) which decides how to render it
+        <Hover>
+            {(hovering) => (
+                <div style={styles.container}>
+                {hovering === true && <div style={styles.tooltip}>{text}</div>}
+                {children}  
+            </div>
+            )}   
+        </Hover>
     )
-  }
 }
 
 Tooltip.propTypes = {
