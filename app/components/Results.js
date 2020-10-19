@@ -4,10 +4,11 @@ import {
   FaBriefcase,
   FaUsers,
   FaUserFriends,
-  FaCode,
   FaUser,
 } from "react-icons/fa";
 import PropTypes from "prop-types";
+import queryString from 'query-string';
+import { Link } from 'react-router-dom';
 
 import Card from "./Card";
 import Loading from "./Loading";
@@ -66,7 +67,7 @@ export default class Results extends React.Component {
   }
 
   componentDidMount() {
-    const { playerOne, playerTwo, onReset } = this.props;
+    const { playerOne, playerTwo } = queryString.parse(this.props.location.search);
 
     battle([playerOne, playerTwo])
       .then((players) => {
@@ -74,18 +75,17 @@ export default class Results extends React.Component {
           winner: players[0],
           loser: players[1],
           error: null,
-          loading: false,
+          loading: false
         });
       })
       .catch(({ message }) => {
         this.setState({
           error: message,
-          loading: false,
+          loading: false
         });
       });
   }
   render() {
-    const { onReset } = this.props;
     const { winner, loser, error, loading } = this.state;
 
     return (
@@ -117,18 +117,12 @@ export default class Results extends React.Component {
                 <ProfileComponent profile={loser.profile} />
               </Card>
             </div>
-            <button className="btn dark-btn btn-space" onClick={onReset}>
+            <Link className="btn dark-btn btn-space" to='/battle'>
               Reset
-            </button>
+            </Link>
           </>
         )}
       </>
     );
   }
 }
-
-Results.propTypes = {
-  playerOne: PropTypes.string.isRequired,
-  playerTwo: PropTypes.string.isRequired,
-  onReset: PropTypes.func.isRequired,
-};
