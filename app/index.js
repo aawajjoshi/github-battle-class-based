@@ -1,6 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
 import "./index.css";
 
 import Popular from "./components/Popular";
@@ -10,24 +15,23 @@ import Results from "./components/Results";
 import { ThemeProvider } from "./contexts/theme";
 
 const NoMatch = ({ location }) => (
-    <div>
-        <h3>No match for <code>{location.pathname}</code></h3>
-    </div>
-)
+  <div>
+    <h3>
+      No match for <code>{location.pathname}</code>
+    </h3>
+  </div>
+);
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
+  state = {
+    theme: "light",
+    toggleTheme: () => {
+      this.setState(({ theme }) => ({
+        theme: theme === "light" ? "dark" : "light",
+      }));
+    },
+  };
 
-    this.state = {
-      theme: "light",
-      toggleTheme: () => {
-        this.setState(({ theme }) => ({
-          theme: theme === "light" ? "dark" : "light",
-        }));
-      },
-    };
-  }
   render() {
     return (
       <Router>

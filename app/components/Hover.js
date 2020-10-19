@@ -3,27 +3,11 @@ import React from "react";
 //render prop that has the hovering logic and expects to receive a children that is a function
 //it invokes the function passing it the argument it needs
 export default class Hover extends React.Component {
-  constructor(props) {
-    super(props);
+  state = { hovering: false }
 
-    this.state = {
-      hovering: false,
-    };
+  mouseOver = () => this.setState({ hovering: true });
 
-    this.mouseOver = this.mouseOver.bind(this);
-    this.mouseOut = this.mouseOut.bind(this);
-  }
-  mouseOver() {
-    this.setState({
-      hovering: true,
-    });
-  }
-
-  mouseOut() {
-    this.setState({
-      hovering: false,
-    });
-  }
+  mouseOut = () => this.setState({ hovering: false });
 
   render() {
     return (
