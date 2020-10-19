@@ -7,9 +7,45 @@ import {
   FaCode,
   FaUser,
 } from "react-icons/fa";
+import PropTypes from 'prop-types';
 
 import Card from "./Card";
 import { battle } from "../utils/api";
+
+function ProfileComponent({ profile }) {
+  return (
+    <ul className="card-list">
+      <li>
+        <FaUser color="rgb(239, 115, 115)" size={22} />
+        {profile.name}
+      </li>
+      {profile.location && (
+        <li>
+          <FaCompass color="rgb(144, 115, 255)" size={22} />
+          {profile.location}
+        </li>
+      )}
+      {profile.company && (
+        <li>
+          <FaBriefcase color="#795548" size={22} />
+          {profile.company}
+        </li>
+      )}
+      <li>
+        <FaUsers color="rgb(129, 195, 245)" size={22} />
+        {profile.followers.toLocaleString()} followers
+      </li>
+      <li>
+        <FaUserFriends color="rgb(64, 183, 95)" size={22} />
+        {profile.following.toLocaleString()} following
+      </li>
+    </ul>
+  );
+}
+
+ProfileComponent.propTypes = {
+    profile: PropTypes.object.isRequired
+}
 
 export default class Results extends React.Component {
   constructor(props) {
@@ -60,32 +96,7 @@ export default class Results extends React.Component {
               href={winner.profile.html_url}
               name={winner.profile.login}
             >
-              <ul className="card-list">
-                <li>
-                  <FaUser color="rgb(239, 115, 115)" size={22} />
-                  {winner.profile.name}
-                </li>
-                {winner.profile.location && (
-                  <li>
-                    <FaCompass color="rgb(144, 115, 255)" size={22} />
-                    {winner.profile.location}
-                  </li>
-                )}
-                {winner.profile.company && (
-                  <li>
-                    <FaBriefcase color="#795548" size={22} />
-                    {winner.profile.company}
-                  </li>
-                )}
-                <li>
-                  <FaUsers color="rgb(129, 195, 245)" size={22} />
-                  {winner.profile.followers.toLocaleString()} followers
-                </li>
-                <li>
-                  <FaUserFriends color="rgb(64, 183, 95)" size={22} />
-                  {winner.profile.following.toLocaleString()} following
-                </li>
-              </ul>
+                <ProfileComponent profile={winner.profile} />
             </Card>
 
             <Card
@@ -95,32 +106,7 @@ export default class Results extends React.Component {
               href={loser.profile.html_url}
               name={loser.profile.login}
             >
-              <ul className="card-list">
-                <li>
-                  <FaUser color="rgb(239, 115, 115)" size={22} />
-                  {loser.profile.name}
-                </li>
-                {loser.profile.location && (
-                  <li>
-                    <FaCompass color="rgb(144, 115, 255)" size={22} />
-                    {loser.profile.location}
-                  </li>
-                )}
-                {loser.profile.company && (
-                  <li>
-                    <FaBriefcase color="#795548" size={22} />
-                    {loser.profile.company}
-                  </li>
-                )}
-                <li>
-                  <FaUsers color="rgb(129, 195, 245)" size={22} />
-                  {loser.profile.followers.toLocaleString()} followers
-                </li>
-                <li>
-                  <FaUserFriends color="rgb(64, 183, 95)" size={22} />
-                  {loser.profile.following.toLocaleString()} following
-                </li>
-              </ul>
+              <ProfileComponent profile={loser.profile} />
             </Card>
           </div>
         )}
