@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { FaUserFriends, FaFighterJet, FaTrophy, FaTimesCircle } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 
-import Results from './Results';
 import { ThemeConsumer } from '../contexts/theme';
 
 function Instructions() {

@@ -3,15 +3,12 @@ import ReactDOM from "react-dom";
 import {
   BrowserRouter as Router,
   Route,
-  Switch,
-  Redirect,
+  Switch
 } from "react-router-dom";
 import "./index.css";
 
-import Popular from "./components/Popular";
-import Battle from "./components/Battle";
 import Nav from "./components/Nav";
-import Results from "./components/Results";
+import Loading from './components/Loading';
 import { ThemeProvider } from "./contexts/theme";
 
 const NoMatch = ({ location }) => (
@@ -21,6 +18,12 @@ const NoMatch = ({ location }) => (
     </h3>
   </div>
 );
+
+//dynamic import syntax (import as a function) allows us to import modules dynamically (as needed)
+//React.lazy() allows us to render a dynamic import like a regular component
+const Popular = React.lazy(() => import('./components/Popular'))
+const Battle = React.lazy(() => import('./components/Battle'))
+const Results = React.lazy(() => import('./components/Results'))
 
 class App extends React.Component {
   state = {
@@ -39,12 +42,14 @@ class App extends React.Component {
           <div className={this.state.theme}>
             <div className="container">
               <Nav />
-              <Switch>
-                <Route exact path="/" component={Popular} />
-                <Route exact path="/battle" component={Battle} />
-                <Route path="/battle/results" component={Results} />
-                <Route component={NoMatch} />
-              </Switch>
+              <React.Suspense fallback={<Loading />}>
+                <Switch>
+                    <Route exact path="/" component={Popular} />
+                    <Route exact path="/battle" component={Battle} />
+                    <Route path="/battle/results" component={Results} />
+                    <Route component={NoMatch} />
+                </Switch>
+              </React.Suspense>
             </div>
           </div>
         </ThemeProvider>

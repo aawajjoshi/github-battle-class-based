@@ -24,11 +24,18 @@ li {
     padding: 50px;
 }
 
+.light {
+    background: transparent;
+    -webkit-transition: background 0.4s ease-in-out;
+    transition: background 0.4s ease-in-out;
+}
+
 .dark {
     color: #DADADA;
     background: #1c2022;
     min-height: 100%;
-    transition: background 0.5s ease-in-out;
+    -webkit-transition: background 0.4s ease-in-out;
+    transition: background 0.4s ease-in-out;
 }
 
 .flex-center {
@@ -119,6 +126,7 @@ li {
 .bg-light {
     background: rgba(0, 0, 0, 0.08);
     border-radius: 3px;
+    transition: all 0.5s ease-in-out;
 }
 
 .card {
@@ -257,9 +265,10 @@ li {
 }
 
 .bg-dark {
-    transition: all 0.5s ease-in-out;
     background: rgb(36, 40, 42);
     border-radius: 3px;
+    -webkit-transition: background 0.4s ease-in-out;
+    transition: background 0.4s ease-in-out;
 }
 
 .player-inputs .input-dark {
